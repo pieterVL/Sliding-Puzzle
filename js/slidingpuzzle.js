@@ -1,15 +1,50 @@
 var slidingpuzzle = {
   point:100,
-  width=null,
+  //width:null,
+  sides:3,
   won:false,
   initPuzzle: function() {
-  	this.width=document.getElementById("game").offsetWidth;
+  	var squares= slidingpuzzle.sides*slidingpuzzle.sides;
+  	var pieceW = 100/slidingpuzzle.sides;
+  	var pieceBGpostInterval = 100/(slidingpuzzle.sides+1);
+  	var game=document.getElementById("game");
+  	game.style.height=game.offsetWidth+"px";
+
+  	slidingpuzzle.blankpos = Math.floor(Math.random() * squares);
+
+  	addGameNodes();
+  	function addGameNodes() {
+  		var docFrag = document.createDocumentFragment();
+  		for (var i = 0; i < squares; i++) {
+  			docFrag.appendChild(createGameDiv(i));
+  		}
+  		game.appendChild(docFrag);
+  	}
+  	function createGameDiv(index) {
+  		var div = document.createElement("div");
+  		div.className = "gameDiv";
+  		div.setAttribute("onclick","clck("+index+")");
+
+  		div.style.width=pieceW+"%";
+  		div.style.height=pieceW+"%";
+  		div.style.backgroundSize=100*slidingpuzzle.sides+"% 300%";
+
+  		div.style.top=  pieceW*Math.floor(index/slidingpuzzle.sides)+"%";
+  		div.style.left= pieceW*(index%slidingpuzzle.sides)+"%";
+
+  		// div.style.backgroundPosition= 
+  		// 	pieceBGpostInterval*(index%slidingpuzzle.sides)+"% "+
+  		// 	(pieceBGpostInterval*Math.floor(index/slidingpuzzle.sides))+"%";
+  		console.log(pieceW*Math.floor(index/slidingpuzzle.sides)+"%");
+  		console.log(pieceW*(index%slidingpuzzle.sides)+"%");
+
+  		if(index===slidingpuzzle.blankpos)div.id="gameDivMissing";
+  		return div;
+  	}
   },
   pointCounter: function() {
   
   },
-  grow:0,
-  side:3,
   getNumber: function() {
   
   },
@@ -26,7 +61,7 @@ var slidingpuzzle = {
   clck: function() {
   
   },
-  blankpos :8,
+  blankpos :-1,//dummy
   pos : [//x,y
 	[0,0],
 	[0,1],
