@@ -1,12 +1,12 @@
 var slidingpuzzle = {
   point:100,
   //width:null,
-  sides:3,
+  sides:4,
   won:false,
   initPuzzle: function() {
   	var squares= slidingpuzzle.sides*slidingpuzzle.sides;
   	var pieceW = 100/slidingpuzzle.sides;
-  	var pieceBGpostInterval = 100/(slidingpuzzle.sides+1);
+  	var pieceBGpostInterval = 100/(slidingpuzzle.sides-1);
   	var game=document.getElementById("game");
   	game.style.height=game.offsetWidth+"px";
 
@@ -27,16 +27,14 @@ var slidingpuzzle = {
 
   		div.style.width=pieceW+"%";
   		div.style.height=pieceW+"%";
-  		div.style.backgroundSize=100*slidingpuzzle.sides+"% 300%";
+  		div.style.backgroundSize=100*slidingpuzzle.sides+"%";
 
   		div.style.top=  pieceW*Math.floor(index/slidingpuzzle.sides)+"%";
   		div.style.left= pieceW*(index%slidingpuzzle.sides)+"%";
 
-  		// div.style.backgroundPosition= 
-  		// 	pieceBGpostInterval*(index%slidingpuzzle.sides)+"% "+
-  		// 	(pieceBGpostInterval*Math.floor(index/slidingpuzzle.sides))+"%";
-  		console.log(pieceW*Math.floor(index/slidingpuzzle.sides)+"%");
-  		console.log(pieceW*(index%slidingpuzzle.sides)+"%");
+  		div.style.backgroundPosition= 
+  			pieceBGpostInterval*(index%slidingpuzzle.sides)+"% "+
+  			(pieceBGpostInterval*Math.floor(index/slidingpuzzle.sides))+"%";
 
   		if(index===slidingpuzzle.blankpos)div.id="gameDivMissing";
   		return div;
