@@ -1,7 +1,7 @@
 var slidingpuzzle = {
   point:100,
   //width:null,
-  sides:3,
+  sides:4,
   won:false,
   initPuzzle: function() {
   	var squares= slidingpuzzle.sides*slidingpuzzle.sides;
@@ -10,26 +10,17 @@ var slidingpuzzle = {
   	var game=document.getElementById("game");
   	game.style.height=game.offsetWidth+"px";
 
-  	slidingpuzzle.blankpos = Math.floor(Math.random() * squares);
+  	slidingpuzzle.blankpos = randomNext(squares);
 
-  	//fillpos
-  	slidingpuzzle.pos = [];
-  	for (var i = 0; i < slidingpuzzle.sides; i++) {
-  		//slidingpuzzle.pos.push([Math.floor(i/slidingpuzzle.sides),i%slidingpuzzle.sides]);//one for loop variation
-  		for (var j = 0; j < slidingpuzzle.sides; j++) {
-  				slidingpuzzle.pos.push([i,j]);
-  		}
-  		//Can perfectly be places in the addGameNodes loop because their loop length is the same
-  	}
-  	//
+  	slidingpuzzle.pos = range(squares);
+
+  	console.log(slidingpuzzle.pos);
+
 
   	addGameNodes();
   	function addGameNodes() {
   		var docFrag = document.createDocumentFragment();
-  		for (var i = 0; i < slidingpuzzle.sides; i++) 
-  		for (var j = 0; j < slidingpuzzle.sides; j++) {
-  			docFrag.appendChild(createGameDiv(i*slidingpuzzle.sides+j));
-  			// docFrag.appendChild(createGameDiv(i));//one for loop variation  			
+  		for (var i = 0; i < squares; ++i) {
   		}
   		game.appendChild(docFrag);
   	}
