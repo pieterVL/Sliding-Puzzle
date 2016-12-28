@@ -9,7 +9,7 @@ function randomNext(top) {
 	return Math.floor(Math.random() * top)
 }
 
-Array.prototype.FisherYatesShuffle = function() {
+Array.prototype.shuffle = function() {
 	for (var i = 0; i < this.length; ++i) {
 		this.swap(i,randomNext(this.length));
 	}
