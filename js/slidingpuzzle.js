@@ -20,6 +20,14 @@ var slidingpuzzle = {
 	//6,1,10,2,7,11,4,14,5,16,9,15,8,12,13,3//solvable
 	//1,2,3,4,5,6,7,8,9,10,11,12,13,15,14,16//not solvable
 
+	//*convert single array to 2dim array*
+	for (var i = 0; i < slidingpuzzle.pos.length; ++i) {
+		slidingpuzzle.pos[i] = [
+		  Math.floor(slidingpuzzle.pos[i]/slidingpuzzle.sides),
+		  slidingpuzzle.pos[i]%slidingpuzzle.sides
+		];
+		if(slidingpuzzle.pos[i] === slidingpuzzle.blankpos) slidingpuzzle.blankpos=i;
+	}
 
   	addGameNodes();
   	function addGameNodes() {
@@ -32,7 +40,7 @@ var slidingpuzzle = {
   	function createGameDiv(index) {
   		var div = document.createElement("div");
   		div.className = "gameDiv";
-  		div.setAttribute("onclick","clck("+index+")");
+  		div.setAttribute("onclick","slidingpuzzle.clck("+index+")");
 
   		div.style.width=pieceW+"%";
   		div.style.height=pieceW+"%";
@@ -75,21 +83,16 @@ var slidingpuzzle = {
   pointCounter: function() {
   
   },
-  getNumber: function() {
-  
-  },
-  check4Win: function () {
-  
-  },
-  checkSwap: function () {
-  
-  },
-  
-  swap: function (index) {
-
-  },
   clck: function() {
-  
+  	function swap(index) {
+  		
+  	}
+  	function checkSwap(index) {
+  		
+  	}
+  	function check4Win(argument) {
+  		
+  	}
   },
   blankpos :-1,
   pos : null//x,y
