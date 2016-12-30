@@ -1,7 +1,10 @@
 var slidingpuzzle = {
   point:100,
+  pieces:null,
+  pos :  null,
+  blankpos :-1,
   //width:null,
-  sides:4,
+  sides:3,
   won:false,
   initPuzzle: function() {
   	var squares= slidingpuzzle.sides*slidingpuzzle.sides;
@@ -21,15 +24,23 @@ var slidingpuzzle = {
 	//1,2,3,4,5,6,7,8,9,10,11,12,13,15,14,16//not solvable
 
 	//*convert single array to 2dim array*
-	for (var i = 0; i < slidingpuzzle.pos.length; ++i) {
-		slidingpuzzle.pos[i] = [
-		  Math.floor(slidingpuzzle.pos[i]/slidingpuzzle.sides),
-		  slidingpuzzle.pos[i]%slidingpuzzle.sides
-		];
-		if(slidingpuzzle.pos[i] === slidingpuzzle.blankpos) slidingpuzzle.blankpos=i;
-	}
+	// for (var i = 0; i < slidingpuzzle.pos.length; ++i) {
+	// 	slidingpuzzle.pos[i] = [
+	// 	  Math.floor(slidingpuzzle.pos[i]/slidingpuzzle.sides),
+	// 	  slidingpuzzle.pos[i]%slidingpuzzle.sides
+	// 	];
+	// 	if(slidingpuzzle.pos[i] === slidingpuzzle.blankpos) slidingpuzzle.blankpos=i;
+	// }
 
   	addGameNodes();
+
+  	slidingpuzzle.pieces = document.getElementsByClassName("gameDiv");
+
+  	for (var i = 0; i < slidingpuzzle.pos.length; ++i) {
+  		slidingpuzzle.piecesCSS(slidingpuzzle.pieces[slidingpuzzle.pos[i]],i);
+  	}
+
+
   	function addGameNodes() {
   		var docFrag = document.createDocumentFragment();
   		for (var i = 0; i < squares; ++i) {
@@ -44,10 +55,7 @@ var slidingpuzzle = {
 
   		div.style.width=pieceW+"%";
   		div.style.height=pieceW+"%";
-  		div.style.backgroundSize=100*slidingpuzzle.sides+"%";
-
-  		div.style.top=  pieceW*Math.floor(index/slidingpuzzle.sides)+"%";
-  		div.style.left= pieceW*(index%slidingpuzzle.sides)+"%";
+  		div.style.backgroundSize=100*slidingpuzzle.sides+"%";  		
 
   		div.style.backgroundPosition= 
   			pieceBGpostInterval*(index%slidingpuzzle.sides)+"% "+
@@ -56,16 +64,15 @@ var slidingpuzzle = {
   		if(index===slidingpuzzle.blankpos)div.id="gameDivMissing";
   		return div;
   	}
-  	function PosSolvable() {
+  	function PosSolvable() {//checking for puzzles with an even grid is still a problem
   		//logic from: 
   		//https://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html
   		var inversions=0,
   			blankposindex;
   		for (var i = 0; i < slidingpuzzle.pos.length; ++i) {
   			for (var j = i+1; j < slidingpuzzle.pos.length; ++j) {
-  				if(slidingpuzzle.pos[i]==slidingpuzzle.blankpos){ 
-  					blankposindex = i;
-  					i++;
+  				if(slidingpuzzle.pos[i]===slidingpuzzle.blankpos){ 
+  					blankposindex = i++;
   				}else if(slidingpuzzle.pos[i]>slidingpuzzle.pos[j]){
   					++inversions;
   				}
@@ -80,20 +87,26 @@ var slidingpuzzle = {
   		}  		
   	}
   },
+  piecesCSS: function (piece, index) {
+  	piece.style.top=  100/slidingpuzzle.sides*Math.floor(index/slidingpuzzle.sides)+"%";
+  	piece.style.left= 100/slidingpuzzle.sides*(index%slidingpuzzle.sides)+"%";
+  },
   pointCounter: function() {
   
   },
-  clck: function() {
-  	function swap(index) {
+  clck: function(index) {
+  	var posIndex   = slidingpuzzle.pos.indexOf(index);
+  	var blankIndex = slidingpuzzle.pos.indexOf(slidingpuzzle.blankpos);
+  	swap();
+  	function swap() {
+  		slidingpuzzle.pos.swap(posIndex, blankIndex);
+  		slidingpuzzle.piecesCSS(slidingpuzzle.pieces[index],blankIndex);
+  	}
+  	function checkSwap() {
   		
   	}
-  	function checkSwap(index) {
+  	function check4Win() {
   		
   	}
-  	function check4Win(argument) {
-  		
-  	}
-  },
-  blankpos :-1,
-  pos : null//x,y
+  }
 }
