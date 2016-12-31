@@ -5,13 +5,15 @@ var slidingpuzzle = {
   blankpos :-1,
   //width:null,
   sides:3,
-  won:false,
-  initPuzzle: function() {
+  win:false,
+  initPuzzle: function() {  	
   	var squares= slidingpuzzle.sides*slidingpuzzle.sides;
   	var pieceW = 100/slidingpuzzle.sides;
   	var pieceBGpostInterval = 100/(slidingpuzzle.sides-1);
   	var game=document.getElementById("game");
   	game.style.height=game.offsetWidth+"px";
+
+  	slidingpuzzle.win=false;
 
   	slidingpuzzle.blankpos = squares-1;
 
@@ -23,22 +25,15 @@ var slidingpuzzle = {
 	//6,1,10,2,7,11,4,14,5,16,9,15,8,12,13,3//solvable
 	//1,2,3,4,5,6,7,8,9,10,11,12,13,15,14,16//not solvable
 
-	//*convert single array to 2dim array*
-	// for (var i = 0; i < slidingpuzzle.pos.length; ++i) {
-	// 	slidingpuzzle.pos[i] = [
-	// 	  Math.floor(slidingpuzzle.pos[i]/slidingpuzzle.sides),
-	// 	  slidingpuzzle.pos[i]%slidingpuzzle.sides
-	// 	];
-	// 	if(slidingpuzzle.pos[i] === slidingpuzzle.blankpos) slidingpuzzle.blankpos=i;
-	// }
-
   	addGameNodes();
 
   	slidingpuzzle.pieces = document.getElementsByClassName("gameDiv");
-
+  		
   	for (var i = 0; i < slidingpuzzle.pos.length; ++i) {
-  		slidingpuzzle.piecesCSS(slidingpuzzle.pieces[slidingpuzzle.pos[i]],i);
-  	}
+  		if(slidingpuzzle.pos[i]===slidingpuzzle.blankpos)slidingpuzzle.piecesCSS(slidingpuzzle.pieces[slidingpuzzle.blankpos],slidingpuzzle.blankpos);
+  		else slidingpuzzle.piecesCSS(slidingpuzzle.pieces[slidingpuzzle.pos[i]],i);
+  	}  	
+
 
 
   	function addGameNodes() {
@@ -95,18 +90,36 @@ var slidingpuzzle = {
   
   },
   clck: function(index) {
+  	if(!slidingpuzzle.win){
   	var posIndex   = slidingpuzzle.pos.indexOf(index);
   	var blankIndex = slidingpuzzle.pos.indexOf(slidingpuzzle.blankpos);
-  	swap();
+
+  	if(checkSwap())swap();
+  	if(check4Win()){
+  		console.log("We have a winner");
+  		document.getElementById('gameDivMissing').style.visibility="visible";
+  	}
+
   	function swap() {
   		slidingpuzzle.pos.swap(posIndex, blankIndex);
   		slidingpuzzle.piecesCSS(slidingpuzzle.pieces[index],blankIndex);
   	}
   	function checkSwap() {
-  		
+  		var p1 = Math.abs(Math.floor(posIndex/slidingpuzzle.sides) - Math.floor(blankIndex/slidingpuzzle.sides));
+		var p2 = Math.abs(posIndex%slidingpuzzle.sides - blankIndex%slidingpuzzle.sides);
+		if(p1 > 1 || p2 > 1) return false;
+		if(p1 !== p2)
+		{			
+			return true;
+		}
+		return false;
   	}
   	function check4Win() {
-  		
+  		for (var i = 0; i < slidingpuzzle.pos.length; ++i) {
+  			if(i!==slidingpuzzle.pos[i]) return false;
+  		}
+  		return true;
+  	}
   	}
   }
 }
