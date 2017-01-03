@@ -1,52 +1,79 @@
+/*General*/
+#slidingpuzzle{
+	font-family: "-apple-system", "Roboto", "Helvetica Neue", "Segoe UI", sans-serif;
+	text-align: center;
+	width:500px;
+	height: 600px;
+	border: solid 1px;
+	position: relative;
+}
+
+#slidingpuzzle .slBtn{
+	border-color: #11c1f3;
+	background: transparent;
+	color: #11c1f3;
+
+	width: 45%;
+
+	display: inline-block;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 4px;
+	vertical-align: top;
+	line-height: 42px;
+	cursor: pointer;
+}
+#slidingpuzzle .slBtn:hover{
+	background-color: #edfaff; 
+}
+#slidingpuzzle .slBtn:active{
+	background-color: #11c1f3;
+	color: #fff;
+}
+#slidingpuzzle .slBtnBig{
+	width: 90%;
+	height: 88px;
+	margin-top: 41px;
+	font-size: 34px;
+	font-weight: 200;
+	font-family: "Verdana";
+} 
+/*Game*/
 .gameDiv{		
-			background-image: url('../img/dummy3.png');
-			box-sizing: border-box;
-			border:1px solid black;
-			position: absolute;
-		}
-		#game{
-			background: black;
-			position: relative;
-			width: 91%;
-			margin: auto;	
-		}
-		#gameDivMissing{
-			visibility: hidden;
-		}
-		#slidingpuzzle{
-			font-family: "-apple-system", "Roboto", "Helvetica Neue", "Segoe UI", sans-serif;
-			text-align: center;
-			width:500px;
-			border: solid 1px;
-		}
-		#slidingpuzzle .slBtn{
-			border-color: #11c1f3;
-			background: transparent;
-			color: #11c1f3;
-
-			width: 45%;
-
-			display: inline-block;
-			border-width: 1px;
-			border-style: solid;
-			border-radius: 4px;
-			vertical-align: top;
-			line-height: 42px;
-			cursor: pointer;
-		}
-		#slidingpuzzle .slBtn:hover{
-			background-color: #edfaff; 
-		}
-		#slidingpuzzle .slBtn:active{
-			background-color: #11c1f3;
-			color: #fff;
-		}
-		#counterWrapper{
-			width: 91%;
-			margin: auto;
-			margin-bottom: 7px;
-		}
-		#counterBar{
-			border-top: 2px solid #608a98;
-			border-bottom: 1px solid #000;
-		}
+	background-image: url('../img/dummy3.png');
+	box-sizing: border-box;
+	border:1px solid black;
+	position: absolute;
+}
+#game{
+	background: black;
+	position: relative;
+	width: 91%;
+	margin: auto;	
+}
+#gameDivMissing{
+	visibility: hidden;
+}
+#counterWrapper{
+	width: 91%;
+	margin: auto;
+	margin-bottom: 7px;
+}
+#counterBar{
+	border-top: 2px solid #608a98;
+	border-bottom: 1px solid #000;
+}
+#pointContainer{
+	color: #10c0f4;
+	font-weight:500;
+	line-height: 1.2;
+	margin:16px 0;
+	font-size: 24px;
+}
+/*Main*/
+#slFooter{
+	position: absolute;
+	width: 100%;
+	bottom: 23px;
+	visibility: hidden;
+}

@@ -8,31 +8,45 @@
 	<script type="text/javascript" src="assets/js/slidingpuzzle.js"></script>
 </head>
 <body>
-<div id="slidingpuzzle"> <!-- gameframe -->
-	<div>
-		<h2 style="padding-top: 15px;">Puzzle<noscript> needs JavaScript</noscript></h2>
-		<noscript><h3>Activate JavaScript and reload the page</h3></noscript>
-	</div>
-	<h5 style="color: #10c0f4;font-weight:500;line-height: 1.2;">
-		Points: <span id="point"></span>
-	</h5>
+<div id="slidingpuzzle">
+	<div id="slidingPuzzleScreens">
+		<div id="mainScreen">
+			<h2 style="padding-top: 12px;font-size: 68px;">Sliding Puzzle<noscript> needs JavaScript</noscript></h2>
+			<noscript><h3>Activate JavaScript and reload the page</h3></noscript>
+				<button class="slBtn slBtnBig" onclick="slidingpuzzle.Buttons.Play();document.getElementById('slFooter').style.visibility='visible';">
+				    Play
+			    </button>
+				<button class="slBtn slBtnBig" onclick="slidingpuzzle.Buttons.Options()">
+					Options					
+				</button>
+			<p id="slFooter">You have won <span id="slidingpuzzleWon"></span> of the <span id="slidingpuzzleGames"></span> Games you played</p>
+		</div>
+		<div id="settingScreen" style="display: none;">
+			
+		</div>
+		<div id="gameScreen" style="display: none;">
+				<h5 id="pointContainer">
+					Points: <span id="slpoint"></span>
+				</h5>
 
-	<div id="counterWrapper">
-		<div id="counterBar"></div>
+				<div id="counterWrapper">
+					<div id="counterBar"></div>
+				</div>
+			  <div id="game"></div>
+			  	<p>
+					 <button class="slBtn slInvrtBtn" onclick="slidingpuzzle.Buttons.Quit()">
+				        Quit
+				    </button>
+					<button onclick="slidingpuzzle.Buttons.Restart()" class="slBtn slInvrtBtn">
+						Restart
+					</button>
+					<button class="slBtn slInvrtBtn" onclick="slidingpuzzle.Buttons.Main()" style="width:90%;display: none;">
+				        Done
+				    </button>
+				</p>		
+		</div>
 	</div>
-  <div id="game"></div>
-  	<p>
-		 <button class="slBtn" onclick="slidingpuzzle.pos=[0,1,2,3,4,5,6,7,8]">
-	        Quit
-	    </button>
-		<button onclick="slidingpuzzle.initPuzzle()" class="slBtn">
-			Restart
-		</button>
-		<button class="slBtn" style="width:90%;display: none;">
-	        Done
-	    </button>
-	</p>
+		
 </div>
-<script type="text/javascript">slidingpuzzle.initPuzzle()</script>
 </body>
 </html>

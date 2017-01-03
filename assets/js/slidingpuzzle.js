@@ -5,10 +5,12 @@ var slidingpuzzle = {
   pos :  null,
   blankpos :-1,
   gamesplayed:0,
+  timesWon:0,
   sides:3,
   over:false,
   initPuzzle: function() {
-  	slidingpuzzle.point=slidingpuzzle.maxPoint;
+  	slidingpuzzle.point=slidingpuzzle.maxPoint;    
+    document.getElementById('slpoint').innerHTML=slidingpuzzle.maxPoint;
   	var squares= slidingpuzzle.sides*slidingpuzzle.sides;
   	var pieceW = 100/slidingpuzzle.sides;
   	var pieceBGpostInterval = 100/(slidingpuzzle.sides-1); //not the geatest name, I know.
@@ -96,7 +98,7 @@ var slidingpuzzle = {
       if(gamesplayed === slidingpuzzle.gamesplayed)
   		if(slidingpuzzle.point!==0)
   		{
-  			document.getElementById('point').innerHTML = --slidingpuzzle.point;
+  			document.getElementById('slpoint').innerHTML = --slidingpuzzle.point;
   			document.getElementById('counterBar').style.width = slidingpuzzle.point/slidingpuzzle.maxPoint*100+"%";
   			slidingpuzzle.pointCounter(gamesplayed);
   		}else{
@@ -114,8 +116,10 @@ var slidingpuzzle = {
   	if(checkSwap())swap();
   	if(check4Win()){
   		slidingpuzzle.over=true;
-  		slidingpuzzle.invertBtns();
+    ++slidingpuzzle.timesWon;
+      slidingpuzzle.invertBtns();
   		document.getElementById('gameDivMissing').style.visibility="visible";
+
   	}
 
   	function swap() {
@@ -141,10 +145,50 @@ var slidingpuzzle = {
   	}
   },
   invertBtns: function () {
-  	var btns=document.getElementsByClassName('slBtn');
-	for (var i=0; i<btns.length; ++i) {
-		if(btns[i].style.display=="") btns[i].style.display="none";
-		else btns[i].style.display="";
+  	var btns=document.getElementsByClassName('slInvrtBtn');
+	  for (var i=0; i<btns.length; ++i) {
+		  if(btns[i].style.display=="") btns[i].style.display="none";
+		  else btns[i].style.display="";
 	  }
+  },
+  fillFooterStats:function(){
+      document.getElementById('slidingpuzzleWon').innerHTML  =slidingpuzzle.timesWon;
+      document.getElementById('slidingpuzzleGames').innerHTML=slidingpuzzle.gamesplayed;
+  },
+  Buttons:{
+    Play:function () {
+      slidingpuzzle.Screens.Game();
+      slidingpuzzle.initPuzzle();
+    },Options:function () {
+      slidingpuzzle.Screens.Options();
+    },Quit:function () {
+      slidingpuzzle.Screens.Main();
+      slidingpuzzle.point=0;
+      slidingpuzzle.fillFooterStats();
+    },Restart:function () {
+      slidingpuzzle.initPuzzle();
+    },Done:function () {
+      slidingpuzzle.Screens.Main();
+      slidingpuzzle.fillFooterStats();
+    }
+    ,Main:function () {
+      slidingpuzzle.Screens.Main();
+    }
+  },
+  Screens:{
+    Main:function () {
+      slidingpuzzle.hideOtherScreens(0);
+    },
+    Settings:function () {
+      slidingpuzzle.hideOtherScreens(1);
+    },
+    Game:function () {
+      slidingpuzzle.hideOtherScreens(2);
+    }
+  },
+  hideOtherScreens:function (nr) {
+    document.getElementById('mainScreen').style.display    =nr===0?"":"none"; 
+    document.getElementById('settingScreen').style.display =nr===1?"":"none"; 
+    document.getElementById('gameScreen').style.display    =nr===2?"":"none";
   }
 }
