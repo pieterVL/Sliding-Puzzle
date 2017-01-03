@@ -1,0 +1,51 @@
+.gameDiv{		
+			background-image: url('../img/dummy3.png');
+			box-sizing: border-box;
+			border:1px solid black;
+			position: absolute;
+		}
+		#game{
+			background: black;
+			position: relative;
+			width: 91%;
+			margin: auto;	
+		}
+		#gameDivMissing{
+			visibility: hidden;
+		}
+		#slidingpuzzle{
+			font-family: "-apple-system", "Roboto", "Helvetica Neue", "Segoe UI", sans-serif;
+			text-align: center;
+			width:500px;
+			border: solid 1px;
+		}
+		#slidingpuzzle .slBtn{
+			border-color: #11c1f3;
+			background: transparent;
+			color: #11c1f3;
+
+			width: 45%;
+
+			display: inline-block;
+			border-width: 1px;
+			border-style: solid;
+			border-radius: 4px;
+			vertical-align: top;
+			line-height: 42px;
+			cursor: pointer;
+		}
+		#slidingpuzzle .slBtn:hover{
+			background-color: #edfaff; 
+		}
+		#slidingpuzzle .slBtn:active{
+			background-color: #11c1f3;
+			color: #fff;
+		}
+		#counterWrapper{
+			width: 91%;
+			margin: auto;
+			margin-bottom: 12px;
+		}
+		#counterBar{
+			border: 1px solid black
+		}

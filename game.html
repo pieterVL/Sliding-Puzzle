@@ -3,61 +3,32 @@
 <head>
 	<title>Slidingpuzzle</title>
 	<meta charset="iso-8859-1"> <!-- no asian signs today -->
-	<style>
-		#slidingpuzzle{
-			font-family: "-apple-system", "Roboto", "Helvetica Neue", "Segoe UI", sans-serif;
-			text-align: center;
-		}
-		.gameDiv{		
-			background-image: url('img/dummy3.png');
-			box-sizing: border-box;
-			border:1px solid black;
-			position: absolute;
-		}
-		#game{
-			background: black;
-			position: relative;
-			width: 91%;
-			margin: auto;	
-		}
-		#gameDivMissing{
-			visibility: hidden;
-		}
-
-		#slidingpuzzle .slBtn{
-			border-color: #11c1f3;
-			background: transparent;
-			color: #11c1f3;
-
-			display: inline-block;
-			border-width: 1px;
-			border-style: solid;
-			border-radius: 4px;
-			vertical-align: top;
-			line-height: 42px;
-			cursor: pointer;
-		}
-	</style>
-	<script type="text/javascript" src="js/common.js"></script>
-	<script type="text/javascript" src="js/slidingpuzzle.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/css/slidingpuzzle.css">
+	<script type="text/javascript" src="assets/js/common.js"></script>
+	<script type="text/javascript" src="assets/js/slidingpuzzle.js"></script>
 </head>
 <body>
-<div id="slidingpuzzle" style="width:500px;border: solid 1px;"> <!-- gameframe -->
+<div id="slidingpuzzle"> <!-- gameframe -->
 	<div>
-		<h2 style="padding-top: 15px;">Puzzle</h2>
+		<h2 style="padding-top: 15px;">Puzzle<noscript> needs JavaScript</noscript></h2>
+		<noscript><h3>Activate JavaScript and reload the page</h3></noscript>
 	</div>
 	<h5 style="color: #10c0f4;font-weight:500;line-height: 1.2;">
 		Points: <span id="point"></span>
 	</h5>
+
+	<div id="counterWrapper">
+		<div id="counterBar"></div>
+	</div>
   <div id="game"></div>
   	<p>
-		 <button class="slBtn" style="margin-top:0px; width:45%;">
+		 <button class="slBtn" onclick="slidingpuzzle.pos=[0,1,2,3,4,5,6,7,8]">
 	        Quit
 	    </button>
-		<button ng-click="initPuzzle()" class="slBtn" style="margin-top:0px; width:45%;">
+		<button ng-click="initPuzzle()" class="slBtn">
 			Refresh
 		</button>
-		<button class="slBtn" style="margin-top:0px; width:90%;display: none;">
+		<button class="slBtn" style="width:90%;display: none;">
 	        Done
 	    </button>
 	</p>

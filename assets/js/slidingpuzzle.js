@@ -1,19 +1,22 @@
 var slidingpuzzle = {
-  point:100,
+  maxPoint:100,
+  point:0,
   pieces:null,
   pos :  null,
   blankpos :-1,
   //width:null,
   sides:3,
-  win:false,
-  initPuzzle: function() {  	
+  over:false,
+  initPuzzle: function() {
+  	slidingpuzzle.point=slidingpuzzle.maxPoint;
   	var squares= slidingpuzzle.sides*slidingpuzzle.sides;
   	var pieceW = 100/slidingpuzzle.sides;
-  	var pieceBGpostInterval = 100/(slidingpuzzle.sides-1);
+  	var pieceBGpostInterval = 100/(slidingpuzzle.sides-1); //not the geatest name, I know.
   	var game=document.getElementById("game");
   	game.style.height=game.offsetWidth+"px";
 
-  	slidingpuzzle.win=false;
+  	if(slidingpuzzle.over) slidingpuzzle.invertBtns();
+  	slidingpuzzle.over=false;
 
   	slidingpuzzle.blankpos = squares-1;
 
@@ -34,7 +37,7 @@ var slidingpuzzle = {
   		else slidingpuzzle.piecesCSS(slidingpuzzle.pieces[slidingpuzzle.pos[i]],i);
   	}  	
 
-
+  	slidingpuzzle.pointCounter();
 
   	function addGameNodes() {
   		var docFrag = document.createDocumentFragment();
@@ -87,16 +90,29 @@ var slidingpuzzle = {
   	piece.style.left= 100/slidingpuzzle.sides*(index%slidingpuzzle.sides)+"%";
   },
   pointCounter: function() {
-  
+  	setTimeout(function(){
+  		if(!slidingpuzzle.over)
+  		if(slidingpuzzle.point!==0)
+  		{
+  			document.getElementById('point').innerHTML = --slidingpuzzle.point;
+  			document.getElementById('counterBar').style.width = slidingpuzzle.point/slidingpuzzle.maxPoint*100+"%";
+  			slidingpuzzle.pointCounter();
+  		}else{
+  			slidingpuzzle.invertBtns();
+  			slidingpuzzle.over=true;
+  		}
+  	}, 1001);
+
   },
   clck: function(index) {
-  	if(!slidingpuzzle.win){
+  	if(!slidingpuzzle.over){
   	var posIndex   = slidingpuzzle.pos.indexOf(index);
   	var blankIndex = slidingpuzzle.pos.indexOf(slidingpuzzle.blankpos);
 
   	if(checkSwap())swap();
   	if(check4Win()){
-  		console.log("We have a winner");
+  		slidingpuzzle.over=true;
+  		slidingpuzzle.invertBtns();
   		document.getElementById('gameDivMissing').style.visibility="visible";
   	}
 
@@ -121,5 +137,12 @@ var slidingpuzzle = {
   		return true;
   	}
   	}
+  },
+  invertBtns: function () {
+  	var btns=document.getElementsByClassName('slBtn');
+	for (var i=0; i<btns.length; ++i) {
+		if(btns[i].style.display=="") btns[i].style.display="none";
+		else btns[i].style.display="";
+	  }
   }
 }
