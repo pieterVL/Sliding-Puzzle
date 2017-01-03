@@ -23,23 +23,23 @@
 		</div>
 		<div id="settingScreen" style="display: none;">
 				<h2 style="padding-top: 12px;font-size: 50px;">Sliding Puzzle</h2>
-				 <form id="slidForm" action="javascript:slidingpuzzle.Buttons.ChangeOptions()">
+				 <form id="slidForm" action="javascript:slidingpuzzle.Buttons.ChangeOptions()" accept-charset=utf-8>
 					  Sides<br>
-					  <input type="number" class="slBtn" min="3" max="9" name="slSides"><br>
+					  <input type="number" class="slBtn" min="3" max="9" id="slSidesOptions"><br>
 					  Time<br>
-					  <input type="number" class="slBtn" min="20" max="500" name="slSides"><br>
+					  <input type="number" class="slBtn" min="20" max="500" id="slTimeOptions"><br>
 					  <label  class="slBtn" style="margin-bottom: 23px;">
 						  Stop After Timeout
-						  <input type="checkbox" name="slSides"style="position:relative;top:9px;">
+						  <input type="checkbox" id="slSATOptions"style="position:relative;top:9px;">
 					  </label><br>
 					  <input type="submit" class="slBtn" value="Change" style="height:50px;font-size: 22px;"><br>
-					  <input type="button" class="slBtn" value="Back" onclick="" style="height:50px;font-size: 22px;"><br>
+					  <input type="button" class="slBtn" value="Back" onclick="slidingpuzzle.Buttons.Main()" style="height:50px;font-size: 22px;"><br>
 				</form> 
 				<p>Psssst Take a odd side number(3,5,7,9), even is not finished yet and is not guaranteed solvable. -Pieter-</p>
 		</div>
 		<div id="gameScreen" style="display: none;">
 				<h5 id="pointContainer">
-					Points: <span id="slpoint"></span>
+					Time: <span id="slpoint"></span>
 				</h5>
 
 				<div id="counterWrapper">

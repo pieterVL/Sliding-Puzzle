@@ -7,6 +7,7 @@ var slidingpuzzle = {
   gamesplayed:0,
   timesWon:0,
   sides:3,
+  playAfterTimeup:false,  
   over:false,
   initPuzzle: function() {
   	slidingpuzzle.point=slidingpuzzle.maxPoint;    
@@ -102,8 +103,9 @@ var slidingpuzzle = {
   			document.getElementById('counterBar').style.width = slidingpuzzle.point/slidingpuzzle.maxPoint*100+"%";
   			slidingpuzzle.pointCounter(gamesplayed);
   		}else{
+
   			slidingpuzzle.invertBtns();
-  			slidingpuzzle.over=true;
+  			if(!slidingpuzzle.playAfterTimeup)slidingpuzzle.over=true;
   		}
   	}, 1001);
 
@@ -113,14 +115,14 @@ var slidingpuzzle = {
   	var posIndex   = slidingpuzzle.pos.indexOf(index);
   	var blankIndex = slidingpuzzle.pos.indexOf(slidingpuzzle.blankpos);
 
-  	if(checkSwap())swap();
-  	if(check4Win()){
-  		slidingpuzzle.over=true;
-    ++slidingpuzzle.timesWon;
-      slidingpuzzle.invertBtns();
-  		document.getElementById('gameDivMissing').style.visibility="visible";
+  	if(checkSwap()){swap();
+    	if(check4Win()){
+    		slidingpuzzle.over=true;
+        if(slidingpuzzle.point!==0)++slidingpuzzle.timesWon;
+        slidingpuzzle.invertBtns();
+    		document.getElementById('gameDivMissing').style.visibility="visible";
 
-  	}
+  	}}
 
   	function swap() {
   		slidingpuzzle.pos.swap(posIndex, blankIndex);
@@ -156,12 +158,26 @@ var slidingpuzzle = {
       document.getElementById('slidingpuzzleGames').innerHTML=slidingpuzzle.gamesplayed;
       document.getElementById('slidingpuzzleWinPercent').innerHTML= Math.floor(slidingpuzzle.timesWon/slidingpuzzle.gamesplayed*10000)/100;
   },
+  ChangeOptionsForm(){
+    var sides = document.getElementById('slSidesOptions').value,
+        time = document.getElementById('slTimeOptions').value;
+    if(sides) slidingpuzzle.sides = parseInt(sides);
+    if(time) slidingpuzzle.maxPoint = parseInt(time);
+    
+    slidingpuzzle.playAfterTimeup = !document.getElementById('slSATOptions').checked;
+  },
+  FillOptionsForm: function(){
+    document.getElementById('slSidesOptions').value = slidingpuzzle.sides;
+    document.getElementById('slTimeOptions').value = slidingpuzzle.maxPoint;
+    document.getElementById('slSATOptions').checked = !slidingpuzzle.playAfterTimeup;
+  },
   Buttons:{
     Play:function () {
       slidingpuzzle.Screens.Game();
       slidingpuzzle.initPuzzle();
     },Options:function () {
       slidingpuzzle.Screens.Settings();
+      slidingpuzzle.FillOptionsForm();
     },Quit:function () {
       slidingpuzzle.Screens.Main();
       slidingpuzzle.point=0;
@@ -173,6 +189,7 @@ var slidingpuzzle = {
       slidingpuzzle.fillFooterStats();
     }
     ,ChangeOptions:function () {
+      slidingpuzzle.ChangeOptionsForm();
       slidingpuzzle.Screens.Main();
     }
     ,Main:function () {
