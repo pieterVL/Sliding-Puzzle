@@ -4,7 +4,7 @@ var slidingpuzzle = {
   pieces:null,
   pos :  null,
   blankpos :-1,
-  //width:null,
+  gamesplayed:0,
   sides:3,
   over:false,
   initPuzzle: function() {
@@ -37,9 +37,10 @@ var slidingpuzzle = {
   		else slidingpuzzle.piecesCSS(slidingpuzzle.pieces[slidingpuzzle.pos[i]],i);
   	}  	
 
-  	slidingpuzzle.pointCounter();
+  	slidingpuzzle.pointCounter(++slidingpuzzle.gamesplayed);
 
   	function addGameNodes() {
+      game.innerHTML="";
   		var docFrag = document.createDocumentFragment();
   		for (var i = 0; i < squares; ++i) {
   			docFrag.appendChild(createGameDiv(i)); 			  		
@@ -89,14 +90,15 @@ var slidingpuzzle = {
   	piece.style.top=  100/slidingpuzzle.sides*Math.floor(index/slidingpuzzle.sides)+"%";
   	piece.style.left= 100/slidingpuzzle.sides*(index%slidingpuzzle.sides)+"%";
   },
-  pointCounter: function() {
+  pointCounter: function(gamesplayed) {
   	setTimeout(function(){
   		if(!slidingpuzzle.over)
+      if(gamesplayed === slidingpuzzle.gamesplayed)
   		if(slidingpuzzle.point!==0)
   		{
   			document.getElementById('point').innerHTML = --slidingpuzzle.point;
   			document.getElementById('counterBar').style.width = slidingpuzzle.point/slidingpuzzle.maxPoint*100+"%";
-  			slidingpuzzle.pointCounter();
+  			slidingpuzzle.pointCounter(gamesplayed);
   		}else{
   			slidingpuzzle.invertBtns();
   			slidingpuzzle.over=true;

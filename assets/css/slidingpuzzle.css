@@ -44,8 +44,9 @@
 		#counterWrapper{
 			width: 91%;
 			margin: auto;
-			margin-bottom: 12px;
+			margin-bottom: 7px;
 		}
 		#counterBar{
-			border: 1px solid black
+			border-top: 2px solid #608a98;
+			border-bottom: 1px solid #000;
 		}
