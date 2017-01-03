@@ -154,22 +154,26 @@ var slidingpuzzle = {
   fillFooterStats:function(){
       document.getElementById('slidingpuzzleWon').innerHTML  =slidingpuzzle.timesWon;
       document.getElementById('slidingpuzzleGames').innerHTML=slidingpuzzle.gamesplayed;
+      document.getElementById('slidingpuzzleWinPercent').innerHTML= Math.floor(slidingpuzzle.timesWon/slidingpuzzle.gamesplayed*10000)/100;
   },
   Buttons:{
     Play:function () {
       slidingpuzzle.Screens.Game();
       slidingpuzzle.initPuzzle();
     },Options:function () {
-      slidingpuzzle.Screens.Options();
+      slidingpuzzle.Screens.Settings();
     },Quit:function () {
       slidingpuzzle.Screens.Main();
       slidingpuzzle.point=0;
       slidingpuzzle.fillFooterStats();
     },Restart:function () {
       slidingpuzzle.initPuzzle();
-    },Done:function () {
+    },Done:function() {
       slidingpuzzle.Screens.Main();
       slidingpuzzle.fillFooterStats();
+    }
+    ,ChangeOptions:function () {
+      slidingpuzzle.Screens.Main();
     }
     ,Main:function () {
       slidingpuzzle.Screens.Main();

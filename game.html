@@ -11,18 +11,31 @@
 <div id="slidingpuzzle">
 	<div id="slidingPuzzleScreens">
 		<div id="mainScreen">
-			<h2 style="padding-top: 12px;font-size: 68px;">Sliding Puzzle<noscript> needs JavaScript</noscript></h2>
-			<noscript><h3>Activate JavaScript and reload the page</h3></noscript>
-				<button class="slBtn slBtnBig" onclick="slidingpuzzle.Buttons.Play();document.getElementById('slFooter').style.visibility='visible';">
-				    Play
-			    </button>
-				<button class="slBtn slBtnBig" onclick="slidingpuzzle.Buttons.Options()">
-					Options					
-				</button>
-			<p id="slFooter">You have won <span id="slidingpuzzleWon"></span> of the <span id="slidingpuzzleGames"></span> Games you played</p>
+				<h2 style="padding-top: 12px;font-size: 68px;">Sliding Puzzle<noscript> needs JavaScript</noscript></h2>
+				<noscript><h3>Activate JavaScript and reload the page</h3></noscript>
+					<button class="slBtn slBtnBig" onclick="slidingpuzzle.Buttons.Play();document.getElementById('slFooter').style.visibility='visible';">
+					    Play
+				    </button>
+					<button class="slBtn slBtnBig" onclick="slidingpuzzle.Buttons.Options()">
+						Options					
+					</button>
+				<p id="slFooter">You won <span id="slidingpuzzleWon"></span> of the <span id="slidingpuzzleGames"></span> Games you played  ~ <span id="slidingpuzzleWinPercent"></span>%.</p>
 		</div>
 		<div id="settingScreen" style="display: none;">
-			
+				<h2 style="padding-top: 12px;font-size: 50px;">Sliding Puzzle</h2>
+				 <form id="slidForm" action="javascript:slidingpuzzle.Buttons.ChangeOptions()">
+					  Sides<br>
+					  <input type="number" class="slBtn" min="3" max="9" name="slSides"><br>
+					  Time<br>
+					  <input type="number" class="slBtn" min="20" max="500" name="slSides"><br>
+					  <label  class="slBtn" style="margin-bottom: 23px;">
+						  Stop After Timeout
+						  <input type="checkbox" name="slSides"style="position:relative;top:9px;">
+					  </label><br>
+					  <input type="submit" class="slBtn" value="Change" style="height:50px;font-size: 22px;"><br>
+					  <input type="button" class="slBtn" value="Back" onclick="" style="height:50px;font-size: 22px;"><br>
+				</form> 
+				<p>Psssst Take a odd side number(3,5,7,9), even is not finished yet and is not guaranteed solvable. -Pieter-</p>
 		</div>
 		<div id="gameScreen" style="display: none;">
 				<h5 id="pointContainer">
@@ -40,7 +53,7 @@
 					<button onclick="slidingpuzzle.Buttons.Restart()" class="slBtn slInvrtBtn">
 						Restart
 					</button>
-					<button class="slBtn slInvrtBtn" onclick="slidingpuzzle.Buttons.Main()" style="width:90%;display: none;">
+					<button class="slBtn slInvrtBtn" onclick="slidingpuzzle.Buttons.Done()" style="width:90%;display: none;">
 				        Done
 				    </button>
 				</p>		

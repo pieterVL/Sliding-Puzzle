@@ -77,3 +77,21 @@
 	bottom: 23px;
 	visibility: hidden;
 }
+/*Options*/
+#slidForm{
+	padding-top: 13px;	
+}
+#slidForm input[type='number'] {
+    appearance:textfield;
+    -moz-appearance:textfield;
+}
+#slidForm input::-webkit-outer-spin-button,
+#slidForm input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+#slidForm input{
+	height: 31px;
+	margin-bottom: 28px;
+	text-align: center;
+}
