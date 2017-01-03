@@ -1,2 +1,2 @@
 # Sliding-Puzzle
-html sliding puzzle ~ work in progress
+html sliding puzzle ~ Almost Done :D
