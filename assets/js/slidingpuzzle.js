@@ -8,11 +8,12 @@ var slidingpuzzle = {
   timesWon:0,
   sides:3,
   playAfterTimeup:false,  
-  over:false,
+  over:true,
+  previewTimeout:0,
   initPuzzle:function() {
     slidingpuzzle.game=document.getElementById("game");
-    slidingpuzzle.game.setAttribute("onmousedown","document.getElementById('gamePuzzleReference').style.visibility='visible'");
-    slidingpuzzle.game.setAttribute("onmouseup",  "document.getElementById('gamePuzzleReference').style.visibility='hidden'");   
+    slidingpuzzle.game.setAttribute("onmousedown","slidingpuzzle.puzzleReference.show()");
+    slidingpuzzle.game.setAttribute("onmouseup",  "slidingpuzzle.puzzleReference.hide()");   
   },
   startPuzzle: function() {
     slidingpuzzle.game.style.height=game.offsetWidth+"px";
@@ -23,10 +24,8 @@ var slidingpuzzle = {
   	var pieceBGpostInterval = 100/(slidingpuzzle.sides-1); //not the geatest name, I know.
 
   	if(slidingpuzzle.over) slidingpuzzle.showGameStartBtns();
-  	slidingpuzzle.over=false;
 
   	slidingpuzzle.blankpos = squares-1;
-
   	slidingpuzzle.pos = range(squares);
 
   	do{
@@ -42,9 +41,13 @@ var slidingpuzzle = {
   	for (var i = 0; i < slidingpuzzle.pos.length; ++i) {
   		if(slidingpuzzle.pos[i]===slidingpuzzle.blankpos)slidingpuzzle.piecesCSS(slidingpuzzle.pieces[slidingpuzzle.blankpos],slidingpuzzle.blankpos);
   		else slidingpuzzle.piecesCSS(slidingpuzzle.pieces[slidingpuzzle.pos[i]],i);
-  	}  	
+  	}
 
-  	slidingpuzzle.pointCounter(++slidingpuzzle.gamesplayed);
+    slidingpuzzle.puzzleReference.show();
+    slidingpuzzle.previewTimeout = setTimeout(function() {
+      slidingpuzzle.puzzleReference.hide();
+      slidingpuzzle.pointCounter(++slidingpuzzle.gamesplayed);
+    }, 3500);  	
 
   	function addGameNodes() {
       game.innerHTML="<div id=\"gamePuzzleReference\"></div>";
@@ -177,7 +180,17 @@ var slidingpuzzle = {
       document.getElementById('slidingpuzzleGames').innerHTML=slidingpuzzle.gamesplayed;
       document.getElementById('slidingpuzzleWinPercent').innerHTML= Math.floor(slidingpuzzle.timesWon/slidingpuzzle.gamesplayed*10000)/100;
   },
-  ChangeOptionsForm(){
+  puzzleReference:{        
+    show:function(){document.getElementById('gamePuzzleReference').style.visibility='visible';},
+    hide:function(){document.getElementById('gamePuzzleReference').style.visibility='hidden';
+      if(slidingpuzzle.over){//splashscreen    
+        clearTimeout(slidingpuzzle.previewTimeout);
+        slidingpuzzle.pointCounter(++slidingpuzzle.gamesplayed);
+        slidingpuzzle.over=false;
+      }
+    }
+  },
+  ChangeOptionsForm:function(){
     var sides = document.getElementById('slSidesOptions').value,
         time = document.getElementById('slTimeOptions').value;
     if(sides) slidingpuzzle.sides = parseInt(sides);
