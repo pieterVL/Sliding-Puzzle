@@ -10,6 +10,7 @@
 <body>
 <div id="slidingpuzzle"style="margin:auto;">
 	<div id="slidingPuzzleScreens">
+	<!-- - - - - - MainScreen - - - - -->
 		<div id="mainScreen">
 				<h2 style="padding-top: 12px;font-size: 68px;">Sliding Puzzle<noscript> needs JavaScript</noscript></h2>
 				<noscript><h3>Activate JavaScript and reload the page</h3></noscript>
@@ -21,6 +22,7 @@
 					</button>
 				<p id="slFooter">You won <span id="slidingpuzzleWon"></span> of the <span id="slidingpuzzleGames"></span> Games you played  ~ <span id="slidingpuzzleWinPercent"></span>%.</p>
 		</div>
+	<!-- - - - - - SettingScreen - - - - -->
 		<div id="settingScreen" style="display: none;">
 				<h2 style="padding-top: 12px;font-size: 50px;">Sliding Puzzle</h2>
 				 <form id="slidForm" action="javascript:slidingpuzzle.Buttons.ChangeOptions()" accept-charset=utf-8>
@@ -33,10 +35,11 @@
 						  <input type="checkbox" id="slSATOptions"style="position:relative;top:9px;">
 					  </label><br>
 					  <input type="submit" class="slBtn" value="Change" style="height:50px;font-size: 22px;"><br>
-					  <input type="button" class="slBtn" value="Back" onclick="slidingpuzzle.Buttons.Main()" style="height:50px;font-size: 22px;"><br>
+					  <input type="button" class="slBtn" value="Quit without changes" onclick="slidingpuzzle.Buttons.Main()" style="height:50px;font-size: 22px;"><br>
 				</form> 
 				<p>Psssst Take a odd side number(3,5,7,9), even is not finished yet and is not guaranteed solvable. -Pieter-</p>
 		</div>
+	<!-- - - - - - gameScreen - - - - -->
 		<div id="gameScreen" style="display: none;">
 				<h5 id="pointContainer">
 					Time: <span id="slpoint"></span>
@@ -47,13 +50,13 @@
 				</div>
 			  <div id="game"></div>
 			  	<p>
-					 <button class="slBtn slInvrtBtn" onclick="slidingpuzzle.Buttons.Quit()">
+					 <button class="slBtn slGamePlayingbtn" onclick="slidingpuzzle.Buttons.Quit()">
 				        Quit
 				    </button>
-					<button onclick="slidingpuzzle.Buttons.Restart()" class="slBtn slInvrtBtn">
+					<button  class="slBtn slGamePlayingbtn" onclick="slidingpuzzle.Buttons.Restart()">
 						Restart
 					</button>
-					<button class="slBtn slInvrtBtn" onclick="slidingpuzzle.Buttons.Done()" style="width:90%;display: none;">
+					<button class="slBtn slGameOverbtn" onclick="slidingpuzzle.Buttons.Done()" style="width:90%;display: none;">
 				        Done
 				    </button>
 				</p>		

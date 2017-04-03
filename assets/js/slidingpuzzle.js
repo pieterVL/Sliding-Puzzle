@@ -18,7 +18,7 @@ var slidingpuzzle = {
   	var game=document.getElementById("game");
   	game.style.height=game.offsetWidth+"px";
 
-  	if(slidingpuzzle.over) slidingpuzzle.invertBtns();
+  	if(slidingpuzzle.over) slidingpuzzle.showGameStartBtns();
   	slidingpuzzle.over=false;
 
   	slidingpuzzle.blankpos = squares-1;
@@ -66,33 +66,35 @@ var slidingpuzzle = {
   		if(index===slidingpuzzle.blankpos)div.id="gameDivMissing";
   		return div;
   	}
-  	function PosSolvable() {//checking for puzzles with an even grid is still a problem
+  	function PosSolvable() {
   		//logic from: 
   		//https://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html
-  		var inversions=0,
-  			blankposindex;
+  		var inversions=0;
+  		var even = slidingpuzzle.sides%2==0;
+
   		for (var i = 0; i < slidingpuzzle.pos.length; ++i) {
   			for (var j = i+1; j < slidingpuzzle.pos.length; ++j) {
   				if(slidingpuzzle.pos[i]===slidingpuzzle.blankpos){ 
-  					blankposindex = i++;
+  					if(even) var blankposindex = i;
+  					++i;//inversions of the blank pos shouldn't be counted
   				}else if(slidingpuzzle.pos[i]>slidingpuzzle.pos[j]){
   					++inversions;
   				}
   			}
   		}
-  		//return inversions%2==((slidingpuzzle.sides%2==1)?0:blankposindex%slidingpuzzle.sides%2);//does the same thing
-  		if(slidingpuzzle.sides%2==1){
+  		if(!even){
   			return inversions%2==0;
   		}else{
   			var rowFromTop = blankposindex%slidingpuzzle.sides;
   			return rowFromTop%2==inversions%2;
-  		}  		
+  		}
   	}
   },
   piecesCSS: function (piece, index) {
   	piece.style.top=  100/slidingpuzzle.sides*Math.floor(index/slidingpuzzle.sides)+"%";
   	piece.style.left= 100/slidingpuzzle.sides*(index%slidingpuzzle.sides)+"%";
   },
+// loop //  
   pointCounter: function(gamesplayed) {
   	setTimeout(function(){
   		if(!slidingpuzzle.over)
@@ -104,7 +106,7 @@ var slidingpuzzle = {
   			slidingpuzzle.pointCounter(gamesplayed);
   		}else{
 
-  			slidingpuzzle.invertBtns();
+  			slidingpuzzle.showGameStartBtns();
   			if(!slidingpuzzle.playAfterTimeup)slidingpuzzle.over=true;
   		}
   	}, 1001);
@@ -119,7 +121,7 @@ var slidingpuzzle = {
     	if(check4Win()){
     		slidingpuzzle.over=true;
         if(slidingpuzzle.point!==0)++slidingpuzzle.timesWon;
-        slidingpuzzle.invertBtns();
+        slidingpuzzle.showGameOverBtns();
     		document.getElementById('gameDivMissing').style.visibility="visible";
 
   	}}
@@ -130,13 +132,9 @@ var slidingpuzzle = {
   	}
   	function checkSwap() {
   		var p1 = Math.abs(Math.floor(posIndex/slidingpuzzle.sides) - Math.floor(blankIndex/slidingpuzzle.sides));
-		var p2 = Math.abs(posIndex%slidingpuzzle.sides - blankIndex%slidingpuzzle.sides);
-		if(p1 > 1 || p2 > 1) return false;
-		if(p1 !== p2)
-		{			
-			return true;
-		}
-		return false;
+  		var p2 = Math.abs(posIndex%slidingpuzzle.sides - blankIndex%slidingpuzzle.sides);
+  		if(p1 > 1 || p2 > 1) return false;
+  		return (p1 !== p2);
   	}
   	function check4Win() {
   		for (var i = 0; i < slidingpuzzle.pos.length; ++i) {
@@ -146,12 +144,25 @@ var slidingpuzzle = {
   	}
   	}
   },
-  invertBtns: function () {
-  	var btns=document.getElementsByClassName('slInvrtBtn');
-	  for (var i=0; i<btns.length; ++i) {
-		  if(btns[i].style.display=="") btns[i].style.display="none";
-		  else btns[i].style.display="";
+  showGameStartBtns: function () {
+  	var btnsP=document.getElementsByClassName('slGamePlayingbtn');
+    var btnsO=document.getElementsByClassName('slGameOverbtn');
+	  for (var i=0; i<btnsP.length; ++i) {
+		  btnsP[i].style.display="";
 	  }
+    for (var i=0; i<btnsO.length; ++i) {
+      btnsO[i].style.display="none";
+    }
+  },
+  showGameOverBtns: function () {
+    var btnsP=document.getElementsByClassName('slGamePlayingbtn');
+    var btnsO=document.getElementsByClassName('slGameOverbtn');
+    for (var i=0; i<btnsP.length; ++i) {
+      btnsP[i].style.display="none";
+    }
+    for (var i=0; i<btnsO.length; ++i) {
+      btnsO[i].style.display="";
+    }
   },
   fillFooterStats:function(){
       document.getElementById('slidingpuzzleWon').innerHTML  =slidingpuzzle.timesWon;
