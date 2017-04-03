@@ -16,6 +16,9 @@ var slidingpuzzle = {
   	var pieceW = 100/slidingpuzzle.sides;
   	var pieceBGpostInterval = 100/(slidingpuzzle.sides-1); //not the geatest name, I know.
   	var game=document.getElementById("game");
+  	game.setAttribute("onmousedown","document.getElementById('gamePuzzleReference').style.visibility='visible'");
+  	game.setAttribute("onmouseup",  "document.getElementById('gamePuzzleReference').style.visibility='hidden'");
+
   	game.style.height=game.offsetWidth+"px";
 
   	if(slidingpuzzle.over) slidingpuzzle.showGameStartBtns();
@@ -43,7 +46,7 @@ var slidingpuzzle = {
   	slidingpuzzle.pointCounter(++slidingpuzzle.gamesplayed);
 
   	function addGameNodes() {
-      game.innerHTML="";
+      game.innerHTML="<div id=\"gamePuzzleReference\"></div>";
   		var docFrag = document.createDocumentFragment();
   		for (var i = 0; i < squares; ++i) {
   			docFrag.appendChild(createGameDiv(i)); 			  		
@@ -54,6 +57,8 @@ var slidingpuzzle = {
   		var div = document.createElement("div");
   		div.className = "gameDiv";
   		div.setAttribute("onclick","slidingpuzzle.clck("+index+")");
+  		div.setAttribute("onmousedown","event.stopPropagation();");
+  		div.setAttribute("onmouseup",  "event.stopPropagation();");
 
   		div.style.width=pieceW+"%";
   		div.style.height=pieceW+"%";
@@ -113,18 +118,20 @@ var slidingpuzzle = {
 
   },
   clck: function(index) {
+
   	if(!slidingpuzzle.over){
-  	var posIndex   = slidingpuzzle.pos.indexOf(index);
-  	var blankIndex = slidingpuzzle.pos.indexOf(slidingpuzzle.blankpos);
+	  	var posIndex   = slidingpuzzle.pos.indexOf(index);
+	  	var blankIndex = slidingpuzzle.pos.indexOf(slidingpuzzle.blankpos);
 
-  	if(checkSwap()){swap();
-    	if(check4Win()){
-    		slidingpuzzle.over=true;
-        if(slidingpuzzle.point!==0)++slidingpuzzle.timesWon;
-        slidingpuzzle.showGameOverBtns();
-    		document.getElementById('gameDivMissing').style.visibility="visible";
+	  	if(checkSwap()){swap();
+	    	if(check4Win()){
+	    		slidingpuzzle.over=true;
+	        if(slidingpuzzle.point!==0)++slidingpuzzle.timesWon;
+	        slidingpuzzle.showGameOverBtns();
+	    		document.getElementById('gameDivMissing').style.visibility="visible";
 
-  	}}
+	  	}
+  	}
 
   	function swap() {
   		slidingpuzzle.pos.swap(posIndex, blankIndex);

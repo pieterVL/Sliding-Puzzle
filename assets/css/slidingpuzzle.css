@@ -51,9 +51,21 @@
 	width: 91%;
 	margin: auto;	
 }
+#gamePuzzleReference{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	background-image: url('../img/dummy3.png');
+	background-size: 100%;
+	visibility: hidden;
+}
 #gameDivMissing{
 	visibility: hidden;
 }
+/*Pointcounter*/
 #counterWrapper{
 	width: 91%;
 	margin: auto;

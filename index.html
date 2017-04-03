@@ -35,9 +35,8 @@
 						  <input type="checkbox" id="slSATOptions"style="position:relative;top:9px;">
 					  </label><br>
 					  <input type="submit" class="slBtn" value="Change" style="height:50px;font-size: 22px;"><br>
-					  <input type="button" class="slBtn" value="Quit without changes" onclick="slidingpuzzle.Buttons.Main()" style="height:50px;font-size: 22px;"><br>
+					  <input type="button" class="slBtn" value="Quit without changes" onclick="slidingpuzzle.Buttons.Main()" style="height:50px;font-size: 22px;">
 				</form> 
-				<p>Psssst Take a odd side number(3,5,7,9), even is not finished yet and is not guaranteed solvable. -Pieter-</p>
 		</div>
 	<!-- - - - - - gameScreen - - - - -->
 		<div id="gameScreen" style="display: none;">
@@ -48,7 +47,8 @@
 				<div id="counterWrapper">
 					<div id="counterBar"></div>
 				</div>
-			  <div id="game"></div>
+			  <div id="game">			  	
+			  </div>
 			  	<p>
 					 <button class="slBtn slGamePlayingbtn" onclick="slidingpuzzle.Buttons.Quit()">
 				        Quit
