@@ -105,20 +105,23 @@ var slidingpuzzle = {
   },
 // loop //  
   pointCounter: function(gamesplayed) {
+    var barstyle = document.getElementById('counterBar').style,
+        procent = slidingpuzzle.point/slidingpuzzle.maxPoint*100;
+    barstyle.width = procent+"%";
+    barstyle.backgroundColor=procent<40?procent<20?"red":"orange":"black";
   	setTimeout(function(){
   		if(!slidingpuzzle.over)
       if(gamesplayed === slidingpuzzle.gamesplayed)
   		if(slidingpuzzle.point!==0)
   		{
-  			document.getElementById('slpoint').innerHTML = --slidingpuzzle.point;
-  			document.getElementById('counterBar').style.width = slidingpuzzle.point/slidingpuzzle.maxPoint*100+"%";
+  			document.getElementById('slpoint').innerHTML = --slidingpuzzle.point;  			
   			slidingpuzzle.pointCounter(gamesplayed);
   		}else{
 
   			slidingpuzzle.showGameStartBtns();
   			if(!slidingpuzzle.playAfterTimeup)slidingpuzzle.over=true;
   		}
-  	}, 1001);
+  	}, 1000);
 
   },
   clck: function(index) {

@@ -44,6 +44,22 @@
 	box-sizing: border-box;
 	border:1px solid black;
 	position: absolute;
+
+   -webkit-transition-property: top, left;
+   -webkit-transition-duration: 0.5s;
+   -webkit-transition-timing-function:ease;
+
+   -moz-transition-property: top, left;
+   -moz-transition-duration: 0.5s;
+   -moz-transition-timing-function:ease;
+
+   -o-transition-property: top, left;
+   -o-transition-duration: 0.5s;
+   -o-transition-timing-function:ease;
+
+   transition-property: top, left;
+   transition-duration: .03s;
+   transition-timing-function:ease;
 }
 #game{
 	background: black;
@@ -72,8 +88,12 @@
 	margin-bottom: 7px;
 }
 #counterBar{
-	border-top: 2px solid #608a98;
-	border-bottom: 1px solid #000;
+	width: 0;
+	height: 2px;
+	-webkit-transition: width 1s linear;
+	-moz-transition: width 1s linear;
+	-o-transition: width 1s linear;
+	transition: width 1s linear;
 }
 #pointContainer{
 	color: #10c0f4;
