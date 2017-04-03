@@ -10,6 +10,7 @@ var slidingpuzzle = {
   playAfterTimeup:false,  
   over:true,
   previewTimeout:0,
+  pointTimeout:0,
   initPuzzle:function() {
     slidingpuzzle.game=document.getElementById("game");
     slidingpuzzle.game.setAttribute("onmousedown","slidingpuzzle.puzzleReference.show()");
@@ -42,11 +43,12 @@ var slidingpuzzle = {
   		if(slidingpuzzle.pos[i]===slidingpuzzle.blankpos)slidingpuzzle.piecesCSS(slidingpuzzle.pieces[slidingpuzzle.blankpos],slidingpuzzle.blankpos);
   		else slidingpuzzle.piecesCSS(slidingpuzzle.pieces[slidingpuzzle.pos[i]],i);
   	}
-
+    
+    ++slidingpuzzle.gamesplayed;
     slidingpuzzle.puzzleReference.show();
     slidingpuzzle.previewTimeout = setTimeout(function() {
       slidingpuzzle.puzzleReference.hide();
-      slidingpuzzle.pointCounter(++slidingpuzzle.gamesplayed);
+      slidingpuzzle.pointCounter(slidingpuzzle.gamesplayed);
     }, 3500);  	
 
   	function addGameNodes() {
@@ -109,7 +111,7 @@ var slidingpuzzle = {
         procent = slidingpuzzle.point/slidingpuzzle.maxPoint*100;
     barstyle.width = procent+"%";
     barstyle.backgroundColor=procent<40?procent<20?"red":"orange":"black";
-  	setTimeout(function(){
+  	slidingpuzzle.pointTimeout = setTimeout(function(){
   		if(!slidingpuzzle.over)
       if(gamesplayed === slidingpuzzle.gamesplayed)
   		if(slidingpuzzle.point!==0)
@@ -188,7 +190,7 @@ var slidingpuzzle = {
     hide:function(){document.getElementById('gamePuzzleReference').style.visibility='hidden';
       if(slidingpuzzle.over){//splashscreen    
         clearTimeout(slidingpuzzle.previewTimeout);
-        slidingpuzzle.pointCounter(++slidingpuzzle.gamesplayed);
+        slidingpuzzle.pointCounter(slidingpuzzle.gamesplayed);
         slidingpuzzle.over=false;
       }
     }
@@ -217,7 +219,10 @@ var slidingpuzzle = {
       slidingpuzzle.Screens.Main();
       slidingpuzzle.point=0;
       slidingpuzzle.fillFooterStats();
+      clearTimeout(slidingpuzzle.previewTimeout);
     },Restart:function () {
+      clearTimeout(slidingpuzzle.pointTimeout);
+      clearTimeout(slidingpuzzle.previewTimeout);
       slidingpuzzle.startPuzzle();
     },Done:function() {
       slidingpuzzle.Screens.Main();
