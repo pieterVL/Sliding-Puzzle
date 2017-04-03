@@ -9,17 +9,18 @@ var slidingpuzzle = {
   sides:3,
   playAfterTimeup:false,  
   over:false,
-  initPuzzle: function() {
+  initPuzzle:function() {
+    slidingpuzzle.game=document.getElementById("game");
+    slidingpuzzle.game.setAttribute("onmousedown","document.getElementById('gamePuzzleReference').style.visibility='visible'");
+    slidingpuzzle.game.setAttribute("onmouseup",  "document.getElementById('gamePuzzleReference').style.visibility='hidden'");   
+  },
+  startPuzzle: function() {
+    slidingpuzzle.game.style.height=game.offsetWidth+"px";
   	slidingpuzzle.point=slidingpuzzle.maxPoint;    
     document.getElementById('slpoint').innerHTML=slidingpuzzle.maxPoint;
   	var squares= slidingpuzzle.sides*slidingpuzzle.sides;
   	var pieceW = 100/slidingpuzzle.sides;
   	var pieceBGpostInterval = 100/(slidingpuzzle.sides-1); //not the geatest name, I know.
-  	var game=document.getElementById("game");
-  	game.setAttribute("onmousedown","document.getElementById('gamePuzzleReference').style.visibility='visible'");
-  	game.setAttribute("onmouseup",  "document.getElementById('gamePuzzleReference').style.visibility='hidden'");
-
-  	game.style.height=game.offsetWidth+"px";
 
   	if(slidingpuzzle.over) slidingpuzzle.showGameStartBtns();
   	slidingpuzzle.over=false;
@@ -192,7 +193,7 @@ var slidingpuzzle = {
   Buttons:{
     Play:function () {
       slidingpuzzle.Screens.Game();
-      slidingpuzzle.initPuzzle();
+      slidingpuzzle.startPuzzle();
     },Options:function () {
       slidingpuzzle.Screens.Settings();
       slidingpuzzle.FillOptionsForm();
@@ -201,7 +202,7 @@ var slidingpuzzle = {
       slidingpuzzle.point=0;
       slidingpuzzle.fillFooterStats();
     },Restart:function () {
-      slidingpuzzle.initPuzzle();
+      slidingpuzzle.startPuzzle();
     },Done:function() {
       slidingpuzzle.Screens.Main();
       slidingpuzzle.fillFooterStats();
