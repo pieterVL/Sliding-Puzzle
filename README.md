@@ -2,4 +2,4 @@
  MIT License
  
  Working demo here:
-<a href="https://pietervl.github.io/Sliding-Puzzle/"></a>
+[Sliding Puzzle](https://pietervl.github.io/Sliding-Puzzle/)
