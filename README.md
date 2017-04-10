@@ -2,4 +2,4 @@
  MIT License
  
  Working demo here:
-[]("https://pietervl.github.io/Sliding-Puzzle/")
+<a href="https://pietervl.github.io/Sliding-Puzzle/"></a>
