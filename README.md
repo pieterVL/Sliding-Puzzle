@@ -1,2 +1,5 @@
 # Sliding-Puzzle
-html sliding puzzle ~ Almost Done :D
+ MIT License
+ 
+ Working demo here:
+[](https://pietervl.github.io/Sliding-Puzzle/)
