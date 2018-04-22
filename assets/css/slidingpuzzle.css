@@ -40,9 +40,9 @@
 } 
 /*Game*/
 .gameDiv{		
-	background-image: url('../img/dummy3.png');
 	box-sizing: border-box;
 	border:1px solid black;
+	background-color: white;
 	position: absolute;
 
    -webkit-transition-property: top, left;
@@ -74,7 +74,7 @@
 	top: 0;
 	left: 0;
 	z-index: 1;
-	background-image: url('../img/dummy3.png');
+	background-color: white;
 	background-size: 100%;
 	visibility: hidden;
 }
@@ -110,6 +110,11 @@
 	visibility: hidden;
 }
 /*Options*/
+.optionTitle{
+	margin: 0;
+	padding-top: 12px;
+	font-size: 50px;
+}
 #slidForm{
 	padding-top: 13px;	
 }
@@ -127,3 +132,33 @@
 	margin-bottom: 28px;
 	text-align: center;
 }
+/*Pictures*/
+#slExamplePicture{
+	width: 200px;
+	height: 200px;
+	margin: 7px auto;
+	background-size:contain;
+	border: 1px solid black;
+}
+#slPictureGallery{
+	width: 80%;
+	height: 200px;
+	overflow-y: scroll;
+	margin: 6px auto;
+}
+.slGalleryPicture{
+	width: 23%;
+	float: left;
+	margin: 1%;
+	margin-right: 0;
+	border: 1px solid black;
+	background-size: cover;
+}
+
+.slGalleryPicture:after {
+	/*Css trick for keeping the height equal to the widt of an element*/
+	/*https://spin.atomicobject.com/2015/07/14/css-responsive-square/*/
+	content: "";
+	display: block;
+	padding-bottom: 100%;
+  }

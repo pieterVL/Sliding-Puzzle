@@ -11,10 +11,26 @@ var slidingpuzzle = {
   over:true,
   previewTimeout:0,
   pointTimeout:0,
+  images:[
+    "dummy3.png",
+    "dummy4.png",
+    "doge.jpg",
+    "ButThatsNoneOfMyBusiness.jpg",
+    "confessionBear.jpg",
+    "alpaca.jpg",
+    "seal.jpg",
+    "confession_tiger.jpg",
+    "puffin.jpg",
+    "ugandan-knuckles.jpg",
+    "pbear.png",
+    "small_fact_frog.jpg"
+  ],
+  image:0,
   initPuzzle:function() {
     slidingpuzzle.game=document.getElementById("game");
     slidingpuzzle.game.setAttribute("onmousedown","slidingpuzzle.puzzleReference.show()");
-    slidingpuzzle.game.setAttribute("onmouseup",  "slidingpuzzle.puzzleReference.hide()");   
+    slidingpuzzle.game.setAttribute("onmouseup",  "slidingpuzzle.puzzleReference.hide()");
+    slidingpuzzle.initPictureGallery();
   },
   startPuzzle: function() {
     slidingpuzzle.game.style.height=game.offsetWidth+"px";
@@ -52,7 +68,7 @@ var slidingpuzzle = {
     }, 3500);  	
 
   	function addGameNodes() {
-      game.innerHTML="<div id=\"gamePuzzleReference\"></div>";
+    game.innerHTML="<div id=\"gamePuzzleReference\" style=\"background-image:url('assets/img/"+slidingpuzzle.images[slidingpuzzle.image]+"')\"></div>";
   		var docFrag = document.createDocumentFragment();
   		for (var i = 0; i < squares; ++i) {
   			docFrag.appendChild(createGameDiv(i)); 			  		
@@ -101,9 +117,25 @@ var slidingpuzzle = {
   		}
   	}
   },
+  initPictureGallery: function(){
+    var docFrag = document.createDocumentFragment();
+    for (var i = 0; i < slidingpuzzle.images.length; ++i) {
+      docFrag.appendChild(createGalleryPicture(i)); 			  		
+    }
+    document.getElementById("slPictureGallery").appendChild(docFrag);
+
+    function createGalleryPicture(index){
+      var div = document.createElement("div");
+  		div.className = "slGalleryPicture";
+      div.setAttribute("onclick","slidingpuzzle.ChangeOptionsPicture("+index+")");	
+      div.style.backgroundImage = "url(\"assets/img/"+slidingpuzzle.images[index]+"\")";
+  		return div;
+    }
+  },
   piecesCSS: function (piece, index) {
   	piece.style.top=  100/slidingpuzzle.sides*Math.floor(index/slidingpuzzle.sides)+"%";
-  	piece.style.left= 100/slidingpuzzle.sides*(index%slidingpuzzle.sides)+"%";
+    piece.style.left= 100/slidingpuzzle.sides*(index%slidingpuzzle.sides)+"%";
+    piece.style.backgroundImage= "url('assets/img/"+slidingpuzzle.images[slidingpuzzle.image]+"')"; 
   },
 // loop //  
   pointCounter: function(gamesplayed) {
@@ -197,16 +229,24 @@ var slidingpuzzle = {
   },
   ChangeOptionsForm:function(){
     var sides = document.getElementById('slSidesOptions').value,
-        time = document.getElementById('slTimeOptions').value;
+        time = document.getElementById('slTimeOptions').value,
+        picNr = document.getElementById('slPictureNumber').value;
+        
     if(sides) slidingpuzzle.sides = parseInt(sides);
-    if(time) slidingpuzzle.maxPoint = parseInt(time);
+    if(time)  slidingpuzzle.maxPoint = parseInt(time);
+    if(picNr) slidingpuzzle.image = picNr;
     
     slidingpuzzle.playAfterTimeup = !document.getElementById('slSATOptions').checked;
+  },
+  ChangeOptionsPicture:function(index){
+    document.getElementById('slPictureNumber').value=index;
+    document.getElementById('slExamplePicture').style.backgroundImage = "url(\"assets/img/"+slidingpuzzle.images[index]+"\")";
   },
   FillOptionsForm: function(){
     document.getElementById('slSidesOptions').value = slidingpuzzle.sides;
     document.getElementById('slTimeOptions').value = slidingpuzzle.maxPoint;
     document.getElementById('slSATOptions').checked = !slidingpuzzle.playAfterTimeup;
+    slidingpuzzle.ChangeOptionsPicture(slidingpuzzle.image);
   },
   Buttons:{
     Play:function () {
@@ -227,12 +267,14 @@ var slidingpuzzle = {
     },Done:function() {
       slidingpuzzle.Screens.Main();
       slidingpuzzle.fillFooterStats();
-    }
-    ,ChangeOptions:function () {
+    },ChangeOptions:function () {
       slidingpuzzle.ChangeOptionsForm();
       slidingpuzzle.Screens.Main();
-    }
-    ,Main:function () {
+    },ChangePicture:function () {
+      slidingpuzzle.Screens.Pictures();
+    },BackToOptions:function () {
+      slidingpuzzle.Screens.Settings();
+    },Main:function () {
       slidingpuzzle.Screens.Main();
     }
   },
@@ -245,11 +287,15 @@ var slidingpuzzle = {
     },
     Game:function () {
       slidingpuzzle.hideOtherScreens(2);
-    }
+    },
+    Pictures:function () {
+      slidingpuzzle.hideOtherScreens(3);
+    },
   },
   hideOtherScreens:function (nr) {
     document.getElementById('mainScreen').style.display    =nr===0?"":"none"; 
     document.getElementById('settingScreen').style.display =nr===1?"":"none"; 
     document.getElementById('gameScreen').style.display    =nr===2?"":"none";
+    document.getElementById('pictureScreen').style.display =nr===3?"":"none";
   }
 }
